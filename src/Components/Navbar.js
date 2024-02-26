@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const navbar = () => {
     return (
         <>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
+            <div class="container-fluid">
+                <nav class="navbar px-3 navbar-expand-lg bg-body-tertiary">
                     {/* <a class="navbar-brand" href="#">Navbar</a> */}
                     <Link className="nav-link active" to="/">Posts</Link>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,8 +16,8 @@ const navbar = () => {
                             <Link className="nav-link" to="/users">Users</Link>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
 
         </>
     )

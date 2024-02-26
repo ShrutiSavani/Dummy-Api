@@ -1,38 +1,54 @@
-.App {
-  text-align: center;
+body {
+    margin: 8px;
+    font-size: 16px;
+    background-color: rgb(217, 233, 247);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+hr,
+p {
+    margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar {
+    margin: 0 40px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.card {
+    margin: 36px 40px;
+    background-color: rgb(183, 210, 231);
+    border: none;
 }
 
-.App-link {
-  color: #61dafb;
+.card-items {
+    display: flex;
+    flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.user-name {
+    font-size: 16px;
+    font-weight: bold;
+    align-self: flex-end;
+    color: rgb(74, 111, 139);
+}
+
+.post-title {
+    font-size: 20px;
+    flex: 1;
+}
+
+.btn {
+    background-color: rgb(119, 160, 189);
+    color: rgb(41, 79, 105);
+}
+
+.btn:hover {
+    border: 1px solid rgb(119, 160, 189);
+    color: rgb(41, 79, 105);
+
+}
+
+.user-comments {
+    background-color: rgb(217, 233, 247);
+    display: flex;
+    flex-direction: column;
 }
