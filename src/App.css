@@ -4,6 +4,34 @@ body {
     background-color: rgb(217, 233, 247);
 }
 
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid rgb(119, 160, 189);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+   margin: 4px;
+   position: fixed;
+   top:50%;
+   left: 50%;
+    }
+    .error-text{
+        position: fixed;
+        top: 50%;
+        left: 45%;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
 hr,
 p {
     margin: 0;
@@ -11,11 +39,26 @@ p {
 
 .navbar {
     margin: 0 40px;
+    background-color: rgb(119, 160, 189) !important;
+}
+
+.nav-link {
+    color: rgb(41, 79, 105);
+}
+
+.nav-link:hover {
+    color: rgb(41, 79, 105);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav-link:active {
+    font-weight: bold;
 }
 
 .card {
     margin: 36px 40px;
-    background-color: rgb(183, 210, 231);
+    background-color: rgb(193, 218, 236);
     border: none;
 }
 
@@ -31,7 +74,8 @@ p {
     color: rgb(74, 111, 139);
 }
 
-.post-title {
+.post-title,
+.user-id {
     font-size: 20px;
     flex: 1;
 }
@@ -47,8 +91,114 @@ p {
 
 }
 
+.user-detail-card {
+    width: 70%;
+    margin: 40px auto;
+}
+
+.user-card {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 12px;
+}
+
 .user-comments {
     background-color: rgb(217, 233, 247);
     display: flex;
     flex-direction: column;
+}
+
+.user-img {
+    width: 40px;
+}
+
+.user-info-img {
+    width: 400px;
+    height: 400px;
+    align-items: center;
+}
+
+.user-bio,
+.user-bank-details,
+.user-contact,
+.user-company-details {
+    /* border: 1px solid black; */
+    background-color: rgb(217, 233, 247);
+    border-radius: 12px;
+
+}
+
+.user-detail {
+    color: rgb(35, 72, 97);
+}
+
+.detail-heading {
+    font-weight: bold;
+    color: rgb(41, 79, 105);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none
+}
+
+@media (max-width: 1440px) {
+    .user-card {
+        grid-template-columns: repeat(3, auto);
+    }
+
+    .user-detail-card {
+        width: 85%;
+    }
+
+    .user-info-img {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 1040px) {
+    .user-card {
+        grid-template-columns: repeat(2, auto);
+    }
+
+    .user-detail-card {
+        width: 90%;
+        font-size: 12px;
+
+    }
+
+    .user-info-img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 690px) {
+    .user-card {
+        grid-template-columns: repeat(1, auto);
+    }
+
+    .user-detail-card {
+        width: 95%;
+    }
+
+    .user-info-img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .abcd {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 430px) {
+
+
+
+    .user-info-img {
+        width: 150px;
+        height: 150px;
+    }
+
 }

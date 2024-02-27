@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 const navbar = () => {
     return (
         <>
-            <div class="container-fluid">
-                <nav class="navbar px-3 navbar-expand-lg bg-body-tertiary">
+            <div className="container-fluid mb-2 ">
+                <nav className="navbar m-0 navbar-expand-lg bg-body-tertiary px-3">
                     {/* <a class="navbar-brand" href="#">Navbar</a> */}
-                    <Link className="nav-link active" to="/">Posts</Link>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                    <Link className="nav-link " to="/">Posts</Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav">
                             <Link className="nav-link" to="/users">Users</Link>
                         </div>
                     </div>
@@ -22,4 +22,4 @@ const navbar = () => {
         </>
     )
 }
-export default navbar;
+export default navbar;    
