@@ -3,43 +3,49 @@ body {
     font-size: 16px;
     background-color: rgb(217, 233, 247);
 }
+.post-icon{
+    width: 50px;
+    height: 50px;
+    color: rgb(41, 79, 105);
+    /* margin: 3px 40px; */
 
-.loader {
-    width: 48px;
-    height: 48px;
-    border: 5px solid rgb(119, 160, 189);
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-   margin: 4px;
-   position: fixed;
-   top:50%;
-   left: 50%;
-    }
-    .error-text{
-        position: fixed;
-        top: 50%;
-        left: 45%;
-    }
+}
+textarea {
+    resize: none;
+    border: none;
+}
 
-    @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-    } 
-hr,
-p {
-    margin: 0;
+.post-text-title {
+    flex: 2;
+}
+
+.post-text-body {
+    flex: 1;
+}
+
+textarea:focus {
+    outline: 1px solid rgb(41, 79, 105);
+}
+
+textarea:hover {
+    cursor: pointer;
 }
 
 .navbar {
-    margin: 0 40px;
+
+    margin: 20px 40px;
     background-color: rgb(119, 160, 189) !important;
+   
+}
+.navbar-fluid{
+    position: sticky;
+    top: 4px;
+    z-index: 1;
+}
+
+.navbar .nav-link:focus {
+    /* background-color: aliceblue; */
+    border-bottom: 1px solid rgb(74, 111, 139);
 }
 
 .nav-link {
@@ -56,8 +62,47 @@ p {
     font-weight: bold;
 }
 
+
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid rgb(119, 160, 189);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin: 4px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.error-text {
+    position: fixed;
+    top: 50%;
+    left: 45%;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+hr,
+p {
+    margin: 0;
+}
+
 .card {
-    margin: 36px 40px;
+    margin: 36px 60px;
+    /* margin-top: 0; */
     background-color: rgb(193, 218, 236);
     border: none;
 }

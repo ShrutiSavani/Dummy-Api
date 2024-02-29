@@ -17,7 +17,8 @@ const Users = () => {
         async function apiFun() {
             setIsLoading(true)
             try {
-                const responseUsers = await fetch("https://dummyjson.com/users");
+                const responseUsers = await fetch("https://dummyjson.com/users?limit=100");
+                // const responseUsers = await fetch("https://dummyjson.com/users");
                 const usersRes = await responseUsers.json();
                 setUsers(usersRes.users)
 
@@ -41,11 +42,11 @@ const Users = () => {
         )
     }
 
-    if (isLoading) {
-        return (
-            <div>Wait for Loading......</div>
-        )
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div>Wait for Loading......</div>
+    //     )
+    // }
 
     const navigatPage = (userid) => {
         navigate(`/users/${userid}`)
