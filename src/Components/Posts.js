@@ -1,39 +1,35 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addPosts, deletePostsById, getAllPost, updatePostById } from "../services/posts.service";
+import { getAllUser } from "../services/users.service";
+import AddPosts from "./AddPosts";
 import { MdPostAdd } from "react-icons/md";
-// import Iconload from "./icons8-spinner.gif"
+import { MdDelete } from "react-icons/md";
+import { RiEdit2Fill } from "react-icons/ri";
+
 const Posts = () => {
     const navigate = useNavigate()
-
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [posts, setPosts] = useState([])
-
-    const [newTitle, setNewTitle] = useState('')
-    const [newBody, setNewBody] = useState('')
-    const [newUserName, setNewUserName] = useState('')
-
+    const [editPostId, setEditPostId] = useState(null)
+    const [editTitle, setEditTitle] = useState()
+    const [editBody, setEditBody] = useState()
     useEffect(() => {
-        async function apiFun() {
+        const postsListPageApi = async () => {
             setIsLoading(true)
-            try {
-                const responsePosts = await fetch("https://dummyjson.com/posts?limit=150");
-                // const responsePosts = await fetch("https://dummyjson.com/posts");
-                const responseUsers = await fetch("https://dummyjson.com/users?limit=100");
-                const postsRes = await responsePosts.json();
-                const usersRes = await responseUsers.json();
 
-                const users = usersRes.users || [];
-                const fetchedPosts = (postsRes.posts || []).map((post) => {
+            try {
+                const postList = await getAllPost()
+                const userList = await getAllUser();
+                const users = userList.users || [];
+                const fetchedPosts = (postList.posts || []).map((post) => {
                     const user = users.find((user) => user.id === post.userId);
                     return {
                         ...post,
                         username: user?.username,
                     };
                 });
-                console.log(postsRes.posts[0].userId)
-                // fetchedPosts aa postsRes.posts j chhe but ema username push thai gyu.....
-                // console.log(fetchedPosts)
                 setPosts(fetchedPosts)
 
             } catch (e) {
@@ -42,86 +38,148 @@ const Posts = () => {
             }
             setIsLoading(false);
         }
-        apiFun()
+        postsListPageApi();
     }, [])
-    console.log(posts)
-
-
-    const addPost = () => {
-        if (newTitle === '' || newBody === '' || newUserName === '') {
-            alert('all fields are require')
-        }
-        if (newTitle !== '' && newBody !== '' && newUserName !== '') {
-            const updatedPost = [...posts, {
-                body: newBody,
-                id: posts.length + 1,
-                username: newUserName,
-                title: newTitle
-            }]
-
-            setPosts(updatedPost)
-            setNewTitle('')
-            setNewBody('')
-            setNewUserName('')
-        }
-
-    }
 
     if (isLoading) {
         return (
             <span class="loader"></span>
-            // <img src={Iconload}/> 
         )
     }
+
     if (isError) {
         return (
-
             <span className="error-text text-danger fw-bold">{isError}</span>
         )
     }
+
     const navigatPage = (postid) => {
         navigate(`/posts/${postid}`)
     }
 
+    const addPostsApi = async (newPostDetails) => {
+        try {
+            const addPost = await addPosts(newPostDetails);
+            addPost.username = "abcd"
+            setPosts([...posts, addPost])
+        }
 
+        catch (e) {
+            console.log('error fetching data : ', e)
+        }
+    }
+
+    const onAddPost = (newPostDetails) => {
+        if (newPostDetails.body === '' || newPostDetails.title === '') {
+            alert('all fields are require')
+        } else {
+            addPostsApi(newPostDetails)
+        }
+    }
+
+    const deletePostApi = async (postIdForDelete) => {
+        try {
+            const deletePost = await deletePostsById(postIdForDelete)
+            setPosts(posts.filter((post) => post.id !== postIdForDelete))
+        }
+
+        catch (e) {
+            console.log('error fetching data : ', e)
+        }
+    }
+
+    const handleDeleting = (postIdForDelete) => {
+        if (window.confirm('are you sure to delete???')) {
+            deletePostApi(postIdForDelete)
+        }
+    }
+
+    const updatePostApi = async (id) => {
+        const updatePost = await updatePostById()
+        const updatedPost = posts.map((post) => {
+            if (post.id == id) {
+                return {
+                    ...post,
+                    title: editTitle,
+                    body: editBody
+                }
+            }
+            return post;
+        })
+
+        { editTitle == '' || editBody == '' ? alert('both field are compulsory') : setPosts(updatedPost) }
+        setEditPostId(null)
+    }
+
+    const handleEditing = (post) => {
+        setEditPostId(post.id)
+        setEditTitle(post.title)
+        setEditBody(post.body)
+    }
+
+    const saveUpdatedPost = (id, post) => {
+        updatePostApi(id, post)
+    }
 
     return (
         <>
-
             <div className="container-fluid cards" >
                 <div className="text-end">
-                <a href="#add-post" >
-                    <abbr title="add post">
-                     <MdPostAdd className="post-icon me-5"/>
-                     {/* <button className="btn me-5  mb-3">Add Post</button> */}
-                     </abbr>
-                </a>
+                    <a href="#add-post" >
+                        <abbr title="add post">
+                            <MdPostAdd className="post-icon me-5" />
+                        </abbr>
+                    </a>
                 </div>
 
-                {
+                {posts &&
                     posts.map((post) => {
                         return (
-                            <div className="card p-3" id="" onClick={() => { navigatPage(post.id) }}>
+                            <div className="card p-3" id="" key={post.id} onClick={() => { navigatPage(post.id) }}>
+
                                 <div className="card-items">
-                                    <p className="post-title">{post.title}</p>
-                                    <p className="post-body my-2">{post.body}</p>
+
+                                    {editPostId == post.id ? (
+                                        <>
+                                            <div className="d-flex">
+                                                <input className="post-title" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} onClick={(e) => e.stopPropagation()}></input>
+                                            </div>
+                                            <textarea rows={5} className="post-body my-2" value={editBody} onChange={(e) => setEditBody(e.target.value)} onClick={(e) => e.stopPropagation()}></textarea>
+                                            <button className="btn" onClick={(e) => {
+                                                e.stopPropagation()
+                                                saveUpdatedPost(post.id, post)
+                                            }}>Save</button>
+
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <div className="d-flex">
+                                                <p className="post-title">{post.title}</p>
+                                                <MdDelete className=" delete-icon" onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handleDeleting(post.id)
+                                                }} />
+                                                <RiEdit2Fill className="edit-icon" onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handleEditing(post)
+                                                }} />
+                                            </div>
+                                            <p className="post-body my-2">{post.body}</p>
+                                        </>
+
+                                    )}
                                     <hr className="my-2" />
                                     <p className="user-name">- {post.username}</p>
+
                                 </div>
+
                             </div >
                         )
                     })
                 }
 
-                <div className="card p-3" id="add-post">
-                    Add Posts :
-                    <textarea onChange={(e) => setNewBody(e.target.value)} value={newBody} className="my-3" placeholder="description..." />
-                    <div className="d-flex gap-2">
-                        <textarea className="post-text-title" onChange={(e) => setNewTitle(e.target.value)} value={newTitle} placeholder="set title of your post... " />
-                        <textarea className="post-text-body" onChange={(e) => setNewUserName(e.target.value)} value={newUserName} placeholder="enter your name..." />
-                        <button className="btn" onClick={addPost}>Post</button>
-                    </div>
-                </div>
+                <AddPosts onAddPost={onAddPost} />
             </div>
         </>
     )

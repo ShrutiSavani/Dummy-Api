@@ -1,55 +1,45 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
-// import { MdDelete } from "react-icons/md";
-// import { RiEdit2Fill } from "react-icons/ri";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getPostById } from "../services/posts.service";
+import { getUserById } from "../services/users.service";
+import { addComments, deleteCommentsById, getCommentsByPostId, updateCommentById } from "../services/comments.service";
+import AddComments from "./AddComments";
+import { RiEdit2Fill } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
 
 const Comments = () => {
     const navigate = useNavigate()
-
     const { postid } = useParams()
-    // console.log(postid) //2
-
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [posts, setPosts] = useState([])
+    const [disabledBtn, setdisabledBtn] = useState(false);
+    const [post, setPost] = useState([])
     const [comments, setComments] = useState([])
-    const [users, setUsers] = useState([])
-
-    const [newComment, setNewComment] = useState('')
-    const [newUserName, setnewUserName] = useState('')
-
-
+    const [user, setUser] = useState([])
+    const [editedComment, setEditedComment] = useState()
+    const [editCommentId, setEditCommentId] = useState()
 
     useEffect(() => {
-        async function apiFun() {
+        const postDetailsApis = async () => {
             setIsLoading(true)
 
             try {
-
-
-                const responsePost = await fetch(`https://dummyjson.com/posts/${postid}`);
-                const responseComments = await fetch(`https://dummyjson.com/posts/` + postid + `/comments`);
-                let postsRes = await responsePost.json();
-                let commentsRes = await responseComments.json();
-
-                const forUserId = postsRes.userId;
-                const responseUser = await fetch(`https://dummyjson.com/users/${forUserId}`);
-                const usersRes = await responseUser.json();
-                setPosts(postsRes)
-                setComments(commentsRes.comments)
-                setUsers(usersRes)
+                const post = await getPostById(postid)
+                const comments = await getCommentsByPostId(postid)
+                const userid = post.userId;
+                const user = await getUserById(userid)
+                setPost(post)
+                setComments(comments.comments)
+                setUser(user)
 
             } catch (e) {
-                console.log('error fetching data : ', e)
-                setIsError("oops!! error in fetching data.....")
+                console.log('error fetching comment : ', e)
+                setIsError("oops!! error in fetching comment.....")
             }
             setIsLoading(false);
         }
-        apiFun();
-
+        postDetailsApis();
     }, [])
-    console.log(comments)
 
     if (isLoading) {
         return (
@@ -63,28 +53,78 @@ const Comments = () => {
         )
     }
 
-    const addComment = () => {
-        if (newComment === '' || newUserName === '') {
-            alert('all fields are require')
-        }
-        if (newComment !== "" && newUserName !== "") {
-            const updatedComments = [
-                ...comments,
-                {
-                    body: newComment,
-                    postId: postid,
-                    user: {
-                        username: newUserName
-                    }
-                },
+    const addCommentApi = async (newCommentDetails) => {
+        setdisabledBtn(true);
 
-            ];
-            // console.log("Updated comments: ", updatedComments);
-            setComments(updatedComments);
-            setNewComment("");
-            setnewUserName('')
+        try {
+            const addComment = await addComments(newCommentDetails, postid)
+            setComments([...comments, addComment])
+            // setComments((prevComments) => [...prevComments, addComment]);
+            setdisabledBtn(false);
+        }
+
+        catch (e) {
+            console.log('error fetching comment : ', e)
+        }
+    }
+
+    const onAddComment = (newCommentDetails) => {
+        if (newCommentDetails.body === '' || newCommentDetails.title === '') {
+            alert('all fields are require')
+        } else {
+            addCommentApi(newCommentDetails)
         }
     };
+
+    const deleteCommentApi = async (commentIdForDelete) => {
+        try {
+            const deleteComment = await deleteCommentsById(commentIdForDelete)
+            setComments(comments.filter((comment) => comment.id !== commentIdForDelete))
+        }
+
+        catch (e) {
+            console.log('error fetching comment : ', e)
+        }
+    }
+
+    const handleDeleting = (commentIdForDelete) => {
+        if (window.confirm('are you sure to delete???')) {
+            deleteCommentApi(commentIdForDelete)
+        }
+    }
+
+    const updateCommentApi = async (id) => {
+        try {
+            const updateComment = await updateCommentById(id, editedComment, comments)
+
+            // server side updation completed
+            //console.log(updateComment)
+
+            // const updatedComment = comments.map((comment) => {
+            //     if (comment.id == id) {
+            //         return { ...comment, body: editedComment }
+            //     }
+            //     return comment
+            // })
+            // setComments(updatedComment)
+
+            { editedComment == '' ? alert('empty comment not valid') : setComments(updateComment) }
+            setEditCommentId(null)
+        }
+
+        catch (e) {
+            console.log('error fetching comment : ', e)
+        }
+    }
+
+    const handleEditing = (comment) => {
+        setEditedComment(comment.body)
+        setEditCommentId(comment.id)
+    }
+
+    const saveUpdatedComment = (id) => {
+        updateCommentApi(id)
+    }
 
     return (
         <>
@@ -93,54 +133,46 @@ const Comments = () => {
                     <div className="card-items">
 
                         <div className="d-flex">
-                            <p className="post-title ">{posts.title}</p>
-                            <button className="btn " onClick={() => { navigate(-1) }}>Back</button>
+                            <p className="post-title ">{post.title}</p>
+                            <Link to='/'> <button className="btn ">Back</button></Link>
                         </div>
-                        <p className="post-body my-2">{posts.body}</p>
+                        <p className="post-body my-2">{post.body}</p>
                         <hr />
-                        <p className="user-name">{posts.username}</p>
-                        <p className="user-name">- {users.username}</p>
+                        <p className="user-name">{post.username}</p>
+                        <p className="user-name">- {user.username}</p>
 
                     </div>
                     <div className="comment-box">
                         <p className="mb-2">Comments</p>
-                        {comments.length !== 0 ?
+                        {comments && comments.length !== 0 ? (
 
-                            comments.map((data, id) => (
-                                <div key={id} className="user-comments p-2">
-                                    {/* <MdDelete className="text-danger"/><RiEdit2Fill className="text-primary"/> */}
-                                    <p>{data.body}</p>
+                            comments.map((comment, index) => (
+                                <div key={index} className="user-comments mb-2 p-2" >
 
-                                    <p className="user-name">- {data.user.username}</p>
+                                    {editCommentId == comment.id ? (
+                                        <div className="d-flex gap-2">
+                                            <textarea value={editedComment} onChange={(e) => setEditedComment(e.target.value)} ></textarea>
+                                            <button className="btn" onClick={() => saveUpdatedComment(comment.id)}>Save</button>
+                                        </div>
+                                    ) : (
+                                        <div className="d-flex" >
+                                            <p className="comment-body" >{comment.body}</p>
+                                            <MdDelete className="delete-icon " onClick={() => handleDeleting(comment.id)} />
+                                            <RiEdit2Fill className=" edit-icon" onClick={(e) => handleEditing(comment)} />
+                                        </div>
+                                    )}
+                                    <hr />
+                                    <p className="user-name">- {comment.user.username}</p>
                                 </div>
-                            ))
-                            :
-                            // comments.filter((dataComments) => dataComments.postId === posts.id).length === 0 && (<p className="user-comments p-2">no comments..</p>)
-                            <p className="user-comments p-2">no comments..</p>
-
-
-
+                            )))
+                            : (
+                                <p className="user-comments p-2">no comments..</p>
+                            )
                         }
-
-
                     </div>
                 </div>
 
-                <div className=" card p-3">
-                    <div className="comment-box">
-
-
-
-
-                        <p className="mb-2">Add Comments....</p>
-                        <div className="text-area d-flex gap-2">
-                            <textarea className="w-75 text-area-1" placeholder="comments..." value={newComment} onChange={(e) => setNewComment(e.target.value)} />
-                            <textarea className="w-25" placeholder="enter your name..." value={newUserName} onChange={(e) => setnewUserName(e.target.value)} />
-                            <button className="btn" onClick={addComment}>Add</button>
-
-                        </div>
-                    </div>
-                </div>
+                <AddComments disabledBtn={disabledBtn} onAddComment={onAddComment} />
             </div>
         </>
     )

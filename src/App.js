@@ -9,11 +9,9 @@ import Navbar from './Components/Navbar';
 function App() {
   return (
     <div className="App">
-      
       <BrowserRouter>
-      <Navbar />
-
-        <Routes>  
+        <Navbar />
+        <Routes>
           <Route path="/" element={<Posts />} />
           <Route path="/users" element={<Users />} />
           <Route path="/posts/:postid" element={<Comments />} />
