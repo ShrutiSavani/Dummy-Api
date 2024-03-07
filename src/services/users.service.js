@@ -1,7 +1,7 @@
 export const getAllUser = async () => {
     const responseUsers = await fetch("https://dummyjson.com/users?limit=100");
     const usersRes = await responseUsers.json();
-    return usersRes;
+    return usersRes.users;
 }
 
 export const getUserById = async (userId) => {

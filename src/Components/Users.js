@@ -1,31 +1,12 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllUser } from "../services/users.service";
 import { CiUser } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
+import useFetchData from "../Hooks/useFetchData";
 
 const Users = () => {
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    const userListApi = async () => {
-      setIsLoading(true)
-
-      try {
-        const userList = await getAllUser()
-        setUsers(userList.users)
-
-      } catch (e) {
-        console.log('error fetching data : ', e)
-        setIsError("oops!! error in fetching data.....")
-      }
-      setIsLoading(false);
-    }
-    userListApi();
-  }, [])
+  const { loading: isLoading, error: isError, data: users } = useFetchData(getAllUser)
 
   if (isLoading) {
     return (

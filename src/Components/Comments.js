@@ -1,45 +1,22 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { getPostById } from "../services/posts.service";
 import { getUserById } from "../services/users.service";
 import { addComments, deleteCommentsById, getCommentsByPostId, updateCommentById } from "../services/comments.service";
 import AddComments from "./AddComments";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
+import useFetchData from "../Hooks/useFetchData";
 
 const Comments = () => {
-    const navigate = useNavigate()
     const { postid } = useParams()
-    const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
     const [disabledBtn, setdisabledBtn] = useState(false);
-    const [post, setPost] = useState([])
-    const [comments, setComments] = useState([])
-    const [user, setUser] = useState([])
     const [editedComment, setEditedComment] = useState()
     const [editCommentId, setEditCommentId] = useState()
-
-    useEffect(() => {
-        const postDetailsApis = async () => {
-            setIsLoading(true)
-
-            try {
-                const post = await getPostById(postid)
-                const comments = await getCommentsByPostId(postid)
-                const userid = post.userId;
-                const user = await getUserById(userid)
-                setPost(post)
-                setComments(comments.comments)
-                setUser(user)
-
-            } catch (e) {
-                console.log('error fetching comment : ', e)
-                setIsError("oops!! error in fetching comment.....")
-            }
-            setIsLoading(false);
-        }
-        postDetailsApis();
-    }, [])
+    const { loading: isLoading, error: isError, data: post } = useFetchData(getPostById, postid)
+    const { data: comments, setData: setComments } = useFetchData(getCommentsByPostId, postid)
+    const userid = post?.userId
+    const { data: user } = useFetchData(getUserById, userid)
 
     if (isLoading) {
         return (
@@ -139,7 +116,7 @@ const Comments = () => {
                         <p className="post-body my-2">{post.body}</p>
                         <hr />
                         <p className="user-name">{post.username}</p>
-                        <p className="user-name">- {user.username}</p>
+                        <p className="user-name">- {user?.username}</p>
 
                     </div>
                     <div className="comment-box">

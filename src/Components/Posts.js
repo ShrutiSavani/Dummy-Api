@@ -6,40 +6,32 @@ import AddPosts from "./AddPosts";
 import { MdPostAdd } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
+import useFetchData from "../Hooks/useFetchData";
 
 const Posts = () => {
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
-    const [posts, setPosts] = useState([])
     const [editPostId, setEditPostId] = useState(null)
     const [editTitle, setEditTitle] = useState()
     const [editBody, setEditBody] = useState()
+    const { loading: isLoading, error: isError, data: posts, setData: setPosts } = useFetchData(getAllPost)
+    const { data: users } = useFetchData(getAllUser)
+
     useEffect(() => {
-        const postsListPageApi = async () => {
-            setIsLoading(true)
-
-            try {
-                const postList = await getAllPost()
-                const userList = await getAllUser();
-                const users = userList.users || [];
-                const fetchedPosts = (postList.posts || []).map((post) => {
-                    const user = users.find((user) => user.id === post.userId);
-                    return {
-                        ...post,
-                        username: user?.username,
-                    };
-                });
-                setPosts(fetchedPosts)
-
-            } catch (e) {
-                console.log('error fetching data : ', e)
-                setIsError("oops!! error in fetching data.....")
-            }
-            setIsLoading(false);
+        const fun = () => {
+            console.log('enter')
+            console.log('users', users)
+            console.log('posts', posts)
+            const fetchedPosts = (posts || []).map((post) => {
+                const user = users.find((user) => user.id === post.userId);
+                return {
+                    ...post,
+                    username: user?.username,
+                };
+            });
+            setPosts(fetchedPosts)
         }
-        postsListPageApi();
-    }, [])
+        fun()
+    }, [users])
 
     if (isLoading) {
         return (
@@ -95,19 +87,21 @@ const Posts = () => {
     }
 
     const updatePostApi = async (id) => {
-        const updatePost = await updatePostById()
-        const updatedPost = posts.map((post) => {
-            if (post.id == id) {
-                return {
-                    ...post,
-                    title: editTitle,
-                    body: editBody
-                }
-            }
-            return post;
-        })
+        const updatePost = await updatePostById(id, editBody, editTitle, posts)
+        // const updatedPost = posts.map((post) => {
+        //     if (post.id == id) {
+        //         return {
+        //             ...post,
+        //             title: editTitle,
+        //             body: editBody
+        //         }
+        //     }
+        //     return post;
+        // })
 
-        { editTitle == '' || editBody == '' ? alert('both field are compulsory') : setPosts(updatedPost) }
+        // { editTitle == '' || editBody == '' ? alert('both field are compulsory') : setPosts(updatedPost) }
+
+        { editTitle == '' || editBody == '' ? alert('both field are compulsory') : setPosts(updatePost) }
         setEditPostId(null)
     }
 

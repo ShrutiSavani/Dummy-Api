@@ -1,7 +1,7 @@
 export const getAllPost = async () => {
     const responsePosts = await fetch("https://dummyjson.com/posts?limit=150");
     const postsRes = await responsePosts.json();
-    return postsRes;
+    return postsRes.posts;
 }
 
 export const getPostById = async (postId) => {
@@ -32,14 +32,27 @@ export const deletePostsById = async (postId) => {
     return deletePostsRes;
 }
 
-export const updatePostById = async (postId) => {
+export const updatePostById = async (postId, editBody, editTitle, posts) => {
     const responseUpdatePost = await fetch(`https://dummyjson.com/posts/${postId}`, {
         method: 'PUT', /* or PATCH */
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            title: 'I think I should shift to the moon',
+            title: editTitle,
+            body: editBody
         })
     })
-    const updatePostRes = await responseUpdatePost.json()
-    return updatePostRes;
+    // const updatePostRes = await responseUpdatePost.json()
+    // return updatePostRes;
+
+    const updatedPost = posts.map((post) => {
+        if (post.id == postId) {
+            return {
+                ...post,
+                title: editTitle,
+                body: editBody
+            }
+        }
+        return post;
+    })
+    return updatedPost;
 }

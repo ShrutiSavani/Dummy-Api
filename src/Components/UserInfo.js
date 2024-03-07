@@ -1,35 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
 import { MdConnectWithoutContact } from "react-icons/md";
 import { CiBank } from "react-icons/ci";
 import { CgOrganisation } from "react-icons/cg";
 import { getUserById } from "../services/users.service";
+import useFetchData from "../Hooks/useFetchData";
 
 const UserInfo = () => {
-    const navigate = useNavigate()
     const { userid } = useParams()
-    const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
-    const [user, setuser] = useState([])
-
-    useEffect(() => {
-        const userApi = async () => {
-            setIsLoading(true)
-
-            try {
-                const user = await getUserById(userid)
-                setuser(user)
-            }
-
-            catch (e) {
-                console.log('error fetching data : ', e)
-                setIsError("oops!! error in fetching data.....")
-            }
-            setIsLoading(false);
-        }
-        userApi();
-    }, [userid])
+    const { loading: isLoading, error: isError, data: user } = useFetchData(getUserById, userid)
 
     if (isLoading) {
         return (

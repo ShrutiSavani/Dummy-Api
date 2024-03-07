@@ -1,7 +1,7 @@
 export const getCommentsByPostId = async (postId) => {
     const responseComments = await fetch(`https://dummyjson.com/posts/` + postId + `/comments`);
     let commentsRes = await responseComments.json();
-    return commentsRes;
+    return commentsRes.comments;
 }
 
 export const addComments = async (newCommentDetails, postId) => {
