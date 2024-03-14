@@ -3,17 +3,35 @@ body {
     font-size: 16px;
     background-color: rgb(217, 233, 247);
 }
-.post-icon{
+
+.post-icon {
     width: 50px;
     height: 50px;
     color: rgb(41, 79, 105);
     /* margin: 3px 40px; */
 
 }
+
 textarea {
     resize: none;
     border: none;
+    flex: 1;
 }
+
+textarea:focus,
+input:focus {
+    outline: 1px solid rgb(41, 79, 105);
+}
+
+textarea:hover,
+input:hover {
+    cursor: pointer;
+}
+
+input {
+    border: none;
+}
+
 
 .post-text-title {
     flex: 2;
@@ -23,21 +41,16 @@ textarea {
     flex: 1;
 }
 
-textarea:focus {
-    outline: 1px solid rgb(41, 79, 105);
-}
 
-textarea:hover {
-    cursor: pointer;
-}
 
 .navbar {
 
     margin: 20px 40px;
     background-color: rgb(119, 160, 189) !important;
-   
+
 }
-.navbar-fluid{
+
+.navbar-fluid {
     position: sticky;
     top: 4px;
     z-index: 1;
@@ -68,7 +81,7 @@ textarea:hover {
     width: 48px;
     height: 48px;
     border: 5px solid rgb(119, 160, 189);
-    border-bottom-color: transparent;
+    border-bottom-color: transparent;~
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -125,15 +138,33 @@ p {
     flex: 1;
 }
 
+.comment-body {
+    flex: 1;
+}
+
 .btn {
     background-color: rgb(119, 160, 189);
     color: rgb(41, 79, 105);
 }
 
-.btn:hover {
+/* .btn:hover {
     border: 1px solid rgb(119, 160, 189);
     color: rgb(41, 79, 105);
 
+} */
+.delete-icon,
+.edit-icon {
+    width: 20px;
+    height: 20px;
+    color: rgb(41, 79, 105);
+}
+
+.edit-icon {}
+
+.delete-icon:hover,
+.edit-icon:hover {
+    cursor: pointer;
+    opacity: 70%;
 }
 
 .user-detail-card {
@@ -151,6 +182,7 @@ p {
     background-color: rgb(217, 233, 247);
     display: flex;
     flex-direction: column;
+    border: 1px solid rgb(105, 159, 196);
 }
 
 .user-img {
