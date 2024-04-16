@@ -41,8 +41,6 @@ export const updatePostById = async (postId, editBody, editTitle, posts) => {
             body: editBody
         })
     })
-    // const updatePostRes = await responseUpdatePost.json()
-    // return updatePostRes;
 
     const updatedPost = posts.map((post) => {
         if (post.id == postId) {

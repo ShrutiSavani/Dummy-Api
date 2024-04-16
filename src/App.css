@@ -1,281 +1,261 @@
 body {
-    margin: 8px;
-    font-size: 16px;
-    background-color: rgb(217, 233, 247);
+  font-family: 'Rubik', sans-serif;
+  margin: 8px;
+  font-size: 16px;
+  background-color: rgb(217, 233, 247);
 }
 
 .post-icon {
-    width: 50px;
-    height: 50px;
-    color: rgb(41, 79, 105);
-    /* margin: 3px 40px; */
-
+  width: 50px;
+  height: 50px;
+  color: rgb(41, 79, 105);
 }
 
 textarea {
-    resize: none;
-    border: none;
-    flex: 1;
+  resize: none;
+  border: none;
+  flex: 1;
 }
 
 textarea:focus,
 input:focus {
-    outline: 1px solid rgb(41, 79, 105);
+  outline: 1px solid rgb(41, 79, 105);
 }
 
 textarea:hover,
 input:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 input {
-    border: none;
+  border: none;
 }
 
-
 .post-text-title {
-    flex: 2;
+  flex: 2;
 }
 
 .post-text-body {
-    flex: 1;
+  flex: 1;
 }
 
-
-
 .navbar {
-
-    margin: 20px 40px;
-    background-color: rgb(119, 160, 189) !important;
-
+  margin: 20px 40px;
+  background-color: rgb(119, 160, 189) !important;
 }
 
 .navbar-fluid {
-    position: sticky;
-    top: 4px;
-    z-index: 1;
+  position: sticky;
+  top: 4px;
+  z-index: 1;
 }
 
 .navbar .nav-link:focus {
-    /* background-color: aliceblue; */
-    border-bottom: 1px solid rgb(74, 111, 139);
+  border-bottom: 1px solid rgb(74, 111, 139);
 }
 
 .nav-link {
-    color: rgb(41, 79, 105);
+  color: rgb(41, 79, 105);
 }
 
 .nav-link:hover {
-    color: rgb(41, 79, 105);
-    font-size: 20px;
-    font-weight: bold;
+  color: rgb(41, 79, 105);
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .nav-link:active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-
-
 .loader {
-    width: 48px;
-    height: 48px;
-    border: 5px solid rgb(119, 160, 189);
-    border-bottom-color: transparent;~
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    margin: 4px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
+  width: 48px;
+  height: 48px;
+  border: 5px solid rgb(119, 160, 189);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin: 4px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }
 
 .error-text {
-    position: fixed;
-    top: 50%;
-    left: 45%;
+  position: fixed;
+  top: 50%;
+  left: 45%;
 }
 
 @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 hr,
 p {
-    margin: 0;
+  margin: 0;
 }
 
 .card {
-    margin: 36px 60px;
-    /* margin-top: 0; */
-    background-color: rgb(193, 218, 236);
-    border: none;
+  margin: 36px 60px;
+  background-color: rgb(193, 218, 236);
+  border: none;
 }
 
 .card-items {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-email {
+  font-size: 14px;
 }
 
 .user-name {
-    font-size: 16px;
-    font-weight: bold;
-    align-self: flex-end;
-    color: rgb(74, 111, 139);
+  font-size: 16px;
+  font-weight: bold;
+  align-self: flex-end;
+  color: rgb(74, 111, 139);
 }
 
 .post-title,
 .user-id {
-    font-size: 20px;
-    flex: 1;
+  font-size: 20px;
+  flex: 1;
 }
 
 .comment-body {
-    flex: 1;
+  flex: 1;
 }
 
 .btn {
-    background-color: rgb(119, 160, 189);
-    color: rgb(41, 79, 105);
+  background-color: rgb(119, 160, 189);
+  color: rgb(41, 79, 105);
 }
 
-/* .btn:hover {
-    border: 1px solid rgb(119, 160, 189);
-    color: rgb(41, 79, 105);
-
-} */
 .delete-icon,
 .edit-icon {
-    width: 20px;
-    height: 20px;
-    color: rgb(41, 79, 105);
+  width: 20px;
+  height: 20px;
+  color: rgb(41, 79, 105);
 }
-
-.edit-icon {}
 
 .delete-icon:hover,
 .edit-icon:hover {
-    cursor: pointer;
-    opacity: 70%;
+  cursor: pointer;
+  opacity: 70%;
 }
 
 .user-detail-card {
-    width: 70%;
-    margin: 40px auto;
+  width: 70%;
+  margin: 40px auto;
 }
 
 .user-card {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 12px;
 }
 
 .user-comments {
-    background-color: rgb(217, 233, 247);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgb(105, 159, 196);
+  background-color: rgb(217, 233, 247);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(105, 159, 196);
 }
 
 .user-img {
-    width: 40px;
+  width: 40px;
 }
 
 .user-info-img {
-    width: 400px;
-    height: 400px;
-    align-items: center;
+  width: 400px;
+  height: 400px;
+  align-items: center;
 }
 
 .user-bio,
 .user-bank-details,
 .user-contact,
 .user-company-details {
-    /* border: 1px solid black; */
-    background-color: rgb(217, 233, 247);
-    border-radius: 12px;
-
+  background-color: rgb(217, 233, 247);
+  border-radius: 12px;
 }
 
 .user-detail {
-    color: rgb(35, 72, 97);
+  color: rgb(35, 72, 97);
 }
 
 .detail-heading {
-    font-weight: bold;
-    color: rgb(41, 79, 105);
+  font-weight: bold;
+  color: rgb(41, 79, 105);
 }
 
 .navbar-toggler:focus {
-    box-shadow: none
+  box-shadow: none;
 }
 
 @media (max-width: 1440px) {
-    .user-card {
-        grid-template-columns: repeat(3, auto);
-    }
+  .user-card {
+    grid-template-columns: repeat(3, auto);
+  }
 
-    .user-detail-card {
-        width: 85%;
-    }
+  .user-detail-card {
+    width: 85%;
+  }
 
-    .user-info-img {
-        width: 300px;
-        height: 300px;
-    }
+  .user-info-img {
+    width: 300px;
+    height: 300px;
+  }
 }
 
 @media (max-width: 1040px) {
-    .user-card {
-        grid-template-columns: repeat(2, auto);
-    }
+  .user-card {
+    grid-template-columns: repeat(2, auto);
+  }
 
-    .user-detail-card {
-        width: 90%;
-        font-size: 12px;
+  .user-detail-card {
+    width: 90%;
+    font-size: 12px;
+  }
 
-    }
-
-    .user-info-img {
-        width: 200px;
-        height: 200px;
-    }
+  .user-info-img {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 @media (max-width: 690px) {
-    .user-card {
-        grid-template-columns: repeat(1, auto);
-    }
+  .user-card {
+    grid-template-columns: repeat(1, auto);
+  }
 
-    .user-detail-card {
-        width: 95%;
-    }
+  .user-detail-card {
+    width: 95%;
+  }
 
-    .user-info-img {
-        width: 180px;
-        height: 180px;
-    }
+  .user-info-img {
+    width: 180px;
+    height: 180px;
+  }
 
-    .abcd {
-        flex-direction: column;
-    }
+  .abcd {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 430px) {
-
-
-
-    .user-info-img {
-        width: 150px;
-        height: 150px;
-    }
-
+  .user-info-img {
+    width: 150px;
+    height: 150px;
+  }
 }

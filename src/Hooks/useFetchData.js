@@ -3,7 +3,7 @@ const useFetchData = (fetchFunction, params) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [data, setData] = useState();
-   
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -17,9 +17,11 @@ const useFetchData = (fetchFunction, params) => {
         }
         fetchData();
     }, [fetchFunction, params]);
+
     const deleteData = useCallback(() => {
     }, []);
-    return { loading, error, data,setData, deleteData };
+
+    return { loading, error, data, setData, deleteData };
 }
 export default useFetchData;
 

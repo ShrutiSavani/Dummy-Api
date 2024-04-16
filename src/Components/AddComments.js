@@ -20,12 +20,11 @@ const AddComments = ({ onAddComment, disabledBtn }) => {
                     <p className="mb-2">Add Comments....</p>
                     <div className="text-area d-flex gap-2">
                         <textarea className="w-100 text-area-1" placeholder="comments..." value={newCommentDetails.body} onChange={(e) => setNewCommentDetails({ ...newCommentDetails, body: e.target.value })} />
-                        {/* <textarea className="w-25" placeholder="enter your name..." value={newCommentDetails.username} onChange={(e) => setNewCommentDetails({ ...newCommentDetails, username: e.target.value })} /> */}
-                        <button className="btn" onClick={addComment} disabled={disabledBtn}>{
-                            disabledBtn ? 'adding' : 'ADD'
-                        }</button>
-
-
+                        <button className="btn" onClick={addComment} disabled={disabledBtn}>
+                            {
+                                disabledBtn ? 'adding' : 'ADD'
+                            }
+                        </button>
                     </div>
                 </div>
             </div>

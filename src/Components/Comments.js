@@ -36,7 +36,6 @@ const Comments = () => {
         try {
             const addComment = await addComments(newCommentDetails, postid)
             setComments([...comments, addComment])
-            // setComments((prevComments) => [...prevComments, addComment]);
             setdisabledBtn(false);
         }
 
@@ -74,17 +73,6 @@ const Comments = () => {
         try {
             const updateComment = await updateCommentById(id, editedComment, comments)
 
-            // server side updation completed
-            //console.log(updateComment)
-
-            // const updatedComment = comments.map((comment) => {
-            //     if (comment.id == id) {
-            //         return { ...comment, body: editedComment }
-            //     }
-            //     return comment
-            // })
-            // setComments(updatedComment)
-
             { editedComment == '' ? alert('empty comment not valid') : setComments(updateComment) }
             setEditCommentId(null)
         }
@@ -108,7 +96,6 @@ const Comments = () => {
             <div className="container-fluid cards" >
                 <div className="card p-3">
                     <div className="card-items">
-
                         <div className="d-flex">
                             <p className="post-title ">{post.title}</p>
                             <Link to='/'> <button className="btn ">Back</button></Link>
@@ -117,15 +104,12 @@ const Comments = () => {
                         <hr />
                         <p className="user-name">{post.username}</p>
                         <p className="user-name">- {user?.username}</p>
-
                     </div>
                     <div className="comment-box">
                         <p className="mb-2">Comments</p>
                         {comments && comments.length !== 0 ? (
-
                             comments.map((comment, index) => (
                                 <div key={index} className="user-comments mb-2 p-2" >
-
                                     {editCommentId == comment.id ? (
                                         <div className="d-flex gap-2">
                                             <textarea value={editedComment} onChange={(e) => setEditedComment(e.target.value)} ></textarea>
@@ -148,7 +132,6 @@ const Comments = () => {
                         }
                     </div>
                 </div>
-
                 <AddComments disabledBtn={disabledBtn} onAddComment={onAddComment} />
             </div>
         </>

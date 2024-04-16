@@ -130,24 +130,20 @@ const Posts = () => {
                     posts.map((post) => {
                         return (
                             <div className="card p-3" id="" key={post.id} onClick={() => { navigatPage(post.id) }}>
-
                                 <div className="card-items">
-
                                     {editPostId == post.id ? (
-                                        <>
+                                        <div>
                                             <div className="d-flex">
                                                 <input className="post-title" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} onClick={(e) => e.stopPropagation()}></input>
                                             </div>
-                                            <textarea rows={5} className="post-body my-2" value={editBody} onChange={(e) => setEditBody(e.target.value)} onClick={(e) => e.stopPropagation()}></textarea>
+                                            <textarea rows={5} className="post-body w-100 my-2" value={editBody} onChange={(e) => setEditBody(e.target.value)} onClick={(e) => e.stopPropagation()}></textarea>
                                             <button className="btn" onClick={(e) => {
                                                 e.stopPropagation()
                                                 saveUpdatedPost(post.id, post)
                                             }}>Save</button>
-
-                                        </>
-
+                                        </div>
                                     ) : (
-                                        <>
+                                        <div>
                                             <div className="d-flex">
                                                 <p className="post-title">{post.title}</p>
                                                 <MdDelete className=" delete-icon" onClick={(e) => {
@@ -160,19 +156,15 @@ const Posts = () => {
                                                 }} />
                                             </div>
                                             <p className="post-body my-2">{post.body}</p>
-                                        </>
-
+                                        </div>
                                     )}
                                     <hr className="my-2" />
                                     <p className="user-name">- {post.username}</p>
-
                                 </div>
-
                             </div >
                         )
                     })
                 }
-
                 <AddPosts onAddPost={onAddPost} />
             </div>
         </>

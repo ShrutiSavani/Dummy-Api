@@ -31,17 +31,14 @@ const Users = () => {
           {
             users.map((user) => {
               return (
-
                 <div className="card m-0 p-3 " onClick={() => { navigatPage(user.id) }} id="" >
                   <div className="card-items d-flex flex-row">
                     <img className="user-img user-img-part" src={user.image} alt=""></img>
                     <div className="user-about">
-
                       <div className="px-3">
-                        <p ><CiUser className="mb-1 me-1" />{user.firstName} {user.maidenName} {user.lastName}</p>
-                        <span className="fw-light"><BsTelephone className="mb-1 me-1" />{user.phone}</span>
+                        <p>{user.firstName} {user.maidenName} {user.lastName}</p>
+                        <span className="fw-light user-email">{user.email}</span>
                       </div>
-
                     </div>
                   </div>
                 </div >

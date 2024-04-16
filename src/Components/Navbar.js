@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 
-
 const navbar = () => {
     return (
         <>
             <div className="container-fluid navbar-fluid mb-2 ">
                 <nav className="navbar m-0 navbar-expand-lg bg-body-tertiary px-3">
-                    {/* <a class="navbar-brand" href="#">Navbar</a> */}
                     <Link className="nav-link " to="/">Posts</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -18,7 +16,6 @@ const navbar = () => {
                     </div>
                 </nav>
             </div>
-
         </>
     )
 }

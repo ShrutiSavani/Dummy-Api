@@ -26,7 +26,7 @@ export const deleteCommentsById = async (commentId) => {
     return deleteCommentRes;
 }
 
-export const updateCommentById = async (commentId,editedComment,comments) => {
+export const updateCommentById = async (commentId, editedComment, comments) => {
     const responseUpdateComments = await fetch(`https://dummyjson.com/comments/${commentId}`, {
         method: 'PUT', /* or PATCH */
         headers: { 'Content-Type': 'application/json' },
@@ -34,8 +34,6 @@ export const updateCommentById = async (commentId,editedComment,comments) => {
             body: editedComment,
         })
     })
-    // const updateCommentRes = await responseUpdateComments.json();
-    // return updateCommentRes;
     const updatedComment = comments.map((comment) => {
         if (comment.id == commentId) {
             return { ...comment, body: editedComment }
